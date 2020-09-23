@@ -1,13 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import NavBar from './components/NavBar.js'
+
 import './App.css';
+import PersistentDrawerLeft from './components/Drawer'
 
 function App() {
-  CONST [products , setProducts] = useState([]);
+  const [categories , setCategories] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/categories.json").then(response => {
+      response.json().then(data => {
+        setCategories(data);
+      })
+    })
+  }, [])
+
   return (
+
     <div className="App">
-      <p>
-        Hello World
-      </p>
+      <div>
+        <PersistentDrawerLeft />
+      </div>
     </div>
   );
 }
