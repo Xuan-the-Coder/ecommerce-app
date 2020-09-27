@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -17,9 +17,24 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import ProductList from './ProductList';
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
+import HomeIcon from '@material-ui/icons/Home';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import CategoryIcon from '@material-ui/icons/Category';
+import ListIcon from '@material-ui/icons/List';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import InfoIcon from '@material-ui/icons/Info';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import ContactSupportIcon from '@material-ui/icons/ContactSupport';
+import Button from '@material-ui/core/Button';
 
 const drawerWidth = 240;
+
+function ListItemLink(props) {
+    return <ListItem button component="a" {...props} />;
+  }
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,6 +91,45 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto',
+    },
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
+  },
 }));
 
 export default function PersistentDrawerLeft() {
@@ -91,8 +145,10 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   };
 
+
+
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{marginBottom: 100}}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -110,9 +166,24 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap >
             Panda Tea
           </Typography>
+          <div className={classes.search} >
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </div>
+          <IconButton color="inherit" aria-label="view shopping cart"style={{marginLeft:880}}><ShoppingCartIcon /></IconButton>
+          <Button color="inherit" style={{marginLeft:40}}>Login</Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -131,32 +202,48 @@ export default function PersistentDrawerLeft() {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+        <ListItem button>
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText primary="Home" />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <ListIcon />
+          </ListItemIcon>
+          <ListItemText primary="All Products" />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <CategoryIcon />
+          </ListItemIcon>
+          <ListItemText primary="Categories" />
+        </ListItem>
+      </List>
+      <Divider />
+      <List component="nav" aria-label="secondary mailbox folders">
+        <ListItem button>
+          <ListItemIcon>
+            <GitHubIcon />
+          </ListItemIcon>
+          <ListItemText primary="Git Repo" />
+        </ListItem>
+        <ListItemLink href="#simple-list">
+          <ListItemIcon>
+            <InfoIcon />
+          </ListItemIcon>
+          <ListItemText primary="About" />
+        </ListItemLink>
+        <ListItemLink href="#simple-list">
+          <ListItemIcon>
+            <ContactSupportIcon />
+          </ListItemIcon>
+          <ListItemText primary="Contact" />
+        </ListItemLink>
+        </List> 
       </Drawer>
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: open,
-        })}
-      >
-        <div className={classes.drawerHeader} />
-        </main>
-        <ProductList />
-
+        
         
     </div>
   );
