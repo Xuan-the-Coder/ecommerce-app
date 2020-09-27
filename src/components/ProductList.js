@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -14,7 +13,9 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AlarmIcon from '@material-ui/icons/Alarm';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-
+import { Router } from "@material-ui/icons";
+import { Link } from 'react-router-dom'
+import PersistentDrawerLeft from './Drawer'
 
   export default function ProductList() {
 
@@ -31,11 +32,13 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
   
     return (
     <div>
-    
-      <div>
 
-          <Grid container spacing={4} style={{padding: 10, marginTop: 20}}>
-            {products.map(product => (
+      <div>
+        <PersistentDrawerLeft />
+      </div>
+      <div>
+          <Grid container spacing={4} style={{padding: 10}}>
+            {products.map((product, key) => (
               <Grid item xs={3} margin="normal">
                 <div>
                   <Card >
@@ -50,7 +53,7 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
                       <Typography variant="subtitle1">${product.price}</Typography>
                     </CardContent>
                     <CardActions>
-                      <Button variant="contained" color="primary" href="#contained-buttons">View product</Button>
+                      <Link key={key} to={`/product/${product.id}`} style={{textDecoration:'none'}}><Button variant="contained" color="primary" href="#contained-buttons">View details</Button></Link>
                       <IconButton color="primary" aria-label="add to shopping cart"><AddShoppingCartIcon /></IconButton>
                     </CardActions>  
                   </Card>
