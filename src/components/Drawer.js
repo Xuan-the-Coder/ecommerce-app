@@ -15,8 +15,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import HomeIcon from '@material-ui/icons/Home';
@@ -25,9 +23,10 @@ import CategoryIcon from '@material-ui/icons/Category';
 import ListIcon from '@material-ui/icons/List';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import InfoIcon from '@material-ui/icons/Info';
-import DraftsIcon from '@material-ui/icons/Drafts';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom'
+import { auth } from './../firebase/utils'
 
 const drawerWidth = 240;
 
@@ -132,7 +131,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PersistentDrawerLeft() {
+const  PersistentDrawerLeft = props => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -146,8 +145,9 @@ export default function PersistentDrawerLeft() {
   };
 
 
-
+  const { currentUser } = props
   return (
+
     <div className={classes.root} style={{marginBottom: 100}}>
       <CssBaseline />
       <AppBar
@@ -181,9 +181,20 @@ export default function PersistentDrawerLeft() {
               }}
               inputProps={{ 'aria-label': 'search' }}
             />
+          
           </div>
+          
+          <div>
           <IconButton color="inherit" aria-label="view shopping cart"style={{marginLeft:880}}><ShoppingCartIcon /></IconButton>
-          <Button color="inherit" style={{marginLeft:40}}>Login</Button>
+          </div>
+          {currentUser && (
+            <span onClick={()=> auth.signOut()}>Log out</span>
+          )}
+          {!currentUser && (
+          <div>
+          <Link to={`/Signin`} style={{textDecoration:'none', color: '#FFF'}} className="link" ><Button  color="inherit" style={{marginLeft:40}}>Login</Button></Link>
+          </div>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -206,7 +217,7 @@ export default function PersistentDrawerLeft() {
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
-          <ListItemText primary="Home" />
+          <Link  to={`/`} style={{textDecoration:'none' }} color="inherit"><ListItemText primary="Home" /></Link>
         </ListItem>
         <ListItem button>
           <ListItemIcon>
@@ -248,3 +259,9 @@ export default function PersistentDrawerLeft() {
     </div>
   );
 }
+
+PersistentDrawerLeft.defaultProps = {
+  currentUser: null
+}
+
+export default PersistentDrawerLeft

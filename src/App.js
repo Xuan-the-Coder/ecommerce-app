@@ -1,52 +1,81 @@
-import React, { useState, useEffect } from "react";
-import NavBar from './components/NavBar.js'
+import React, { Component } from "react";
 import OutlinedPagination from './components/Pagination'
 import './App.css';
-import PersistentDrawerLeft from './components/Drawer'
+import Registration from "./pages/Signup";
+
 import {
   BrowserRouter as Router,
   Route,
   Switch,
+  Redirect,
 } from 'react-router-dom'
 import ProductList from "./components/ProductList.js";
 import Product from "./pages/Product.js"
-import NotFoundPage from './pages/NotFoundPage';
+import Signin from "./pages/Signin";
+import { auth } from './firebase/utils'
 
-function App() {
-  const [categories , setCategories] = useState([]);
 
-  useEffect(() => {
-    fetch("http://localhost:3000/categories.json").then(response => {
-      response.json().then(data => {
-        setCategories(data);
+const initialState = {
+  currentUser: null
+}
+
+class  App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      ...initialState
+    }
+  }
+
+  authListener = null;
+
+  componentDidMount(){
+    this.authListener = auth.onAuthStateChanged(userAuth => {
+      if (!userAuth) {
+        this.setState({
+          ...initialState
+        })
+      }
+
+      this.setState({
+        currentUser: userAuth
       })
     })
-  }, [])
+  }
 
-  return (
+  componentWillUnmount(){
+    this.authListener()
+  }
 
-    <Router>
+  render(){
+    const { currentUser } = this.state
 
+    return (
 
-
-    <div className="App">
-      <div>
-        <Switch>
-          <Route path="/" component={ProductList} exact />
-          <Route path="/products-list" component={ProductList} />
-          <Route path="/product/:id" component={Product} />
-          <Route component={NotFoundPage} />
-        </Switch>
+      <Router>
+  
+      <div className="App">
+        <div>
+          <Switch>
+            <Route exact path="/" render={() => (
+              <ProductList currentUser={currentUser}/>
+            )} />
+            <Route path="/products-list" component={ProductList} />
+            <Route path="/Signin" 
+            render={() => currentUser ? <Redirect to="/"/>:(
+              <Signin currentUser={currentUser}/>
+            )} />
+            <Route path="/Registration" render={() => (
+              <Registration currentUser={currentUser}/>
+            )} />
+            <Route path="/product/:id" component={Product} />
+          </Switch>
+        </div>
       </div>
-      <div>
-        <OutlinedPagination />
-      </div>
-      <div>
-        <PersistentDrawerLeft />
-      </div>
-    </div>
-    </Router>
-  );
+      </Router>
+    );
+  }
 }
+  
 
 export default App;

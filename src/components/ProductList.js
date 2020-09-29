@@ -10,14 +10,14 @@ import { Divider } from "@material-ui/core";
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AlarmIcon from '@material-ui/icons/Alarm';
+
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import { Router } from "@material-ui/icons";
+
 import { Link } from 'react-router-dom'
 import PersistentDrawerLeft from './Drawer'
+import { auth, handleUserProfile } from './../firebase/utils'
 
-  export default function ProductList() {
+  const ProductList = props => {
 
     const [products , setProducts] = useState([]);
 
@@ -34,7 +34,7 @@ import PersistentDrawerLeft from './Drawer'
     <div>
 
       <div>
-        <PersistentDrawerLeft />
+        <PersistentDrawerLeft {...props}/>
       </div>
       <div>
           <Grid container spacing={4} style={{padding: 10}}>
@@ -42,13 +42,13 @@ import PersistentDrawerLeft from './Drawer'
               <Grid item xs={3} margin="normal">
                 <div>
                   <Card >
-                    <CardMedia style={{height:334, width: 334}}
+                    <CardMedia style={{height:334, width: 350}}
                       image={`http://localhost:3000${product.image_url}`}
                       title="Product Image"
                       />
                     <CardContent>
                       <Typography gutterBottom variant="heardline" component="h2">
-                        {product.name}
+                        {product.name.length<23? product.name : product.name.substring(0, 23)+'...'}
                       </Typography>
                       <Typography variant="subtitle1">${product.price}</Typography>
                     </CardContent>
@@ -67,3 +67,5 @@ import PersistentDrawerLeft from './Drawer'
      </div>
     );
   }
+
+  export default ProductList
