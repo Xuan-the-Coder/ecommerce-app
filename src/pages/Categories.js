@@ -2,24 +2,8 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
+import PersistentDrawerLeft from '../components/Drawer'
 
-const images = [
-  {
-    url: '/static/images/grid-list/breakfast.jpg',
-    title: 'Breakfast',
-    width: '40%',
-  },
-  {
-    url: '/static/images/grid-list/burgers.jpg',
-    title: 'Burgers',
-    width: '30%',
-  },
-  {
-    url: '/static/images/grid-list/camera.jpg',
-    title: 'Camera',
-    width: '30%',
-  },
-];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -94,25 +78,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ButtonBases() {
+export default function Categories() {
   const classes = useStyles();
+  const [categories , setCategories] = useState([]);
+
+  useEffect(() => {
+      fetch("http://localhost:3000/categories.json").then(response => {
+          response.json().then(data => {
+              setCategories(data);
+          })
+      })
+  }, [])
 
   return (
-    <div className={classes.root}>
-      {images.map((image) => (
+    <div>
+    <div>
+    <PersistentDrawerLeft />
+    </div>
+    <div className={classes.root} style={{marginTop: 40, marginLeft:50}}>
+      {categories.map((category) => (
         <ButtonBase
           focusRipple
-          key={image.title}
           className={classes.image}
           focusVisibleClassName={classes.focusVisible}
           style={{
-            width: image.width,
+            width: '40%',
           }}
         >
           <span
             className={classes.imageSrc}
             style={{
-              backgroundImage: `url(${image.url})`,
+              backgroundImage: `url(${category.image_url})`,
             }}
           />
           <span className={classes.imageBackdrop} />
@@ -123,64 +119,13 @@ export default function ButtonBases() {
               color="inherit"
               className={classes.imageTitle}
             >
-              {image.title}
+              {category.name}
               <span className={classes.imageMarked} />
             </Typography>
           </span>
         </ButtonBase>
       ))}
     </div>
+    </div>
   );
 }
-
-
-
-  export default function Categories() {
-
-    const [categories , setCategories] = useState([]);
-
-    useEffect(() => {
-        fetch("http://localhost:3000/Categories.json").then(response => {
-            response.json().then(data => {
-                setCategories(data);
-            })
-        })
-    }, [])
-
-  
-    
-    return (
-    <div>
-    
-      <div>
-
-          <Grid container spacing={4} style={{padding: 10, marginTop: 20}}>
-            {products.map(product => (
-              <Grid item xs={3} margin="normal">
-                <div>
-                  <Card >
-                    <CardMedia style={{height:334, width: 334}}
-                      image={`http://localhost:3000${product.image_url}`}
-                      title="Product Image"
-                      />
-                    <CardContent>
-                      <Typography gutterBottom variant="heardline" component="h2">
-                        {product.name}
-                      </Typography>
-                      <Typography variant="subtitle1">${product.price}</Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button variant="contained" color="primary" href="#contained-buttons">View product</Button>
-                      <IconButton color="primary" aria-label="add to shopping cart"><AddShoppingCartIcon /></IconButton>
-                    </CardActions>  
-                  </Card>
-                </div>
-              </Grid>
-            ))}
-          </Grid>
-      </div>
-      
-        
-     </div>
-    );
-  }
