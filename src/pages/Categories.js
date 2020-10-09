@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import PersistentDrawerLeft from '../components/Drawer'
+import { Link } from 'react-router-dom'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -14,10 +15,10 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     position: 'relative',
-    height: 200,
+    height: 270,
     [theme.breakpoints.down('xs')]: {
       width: '100% !important', // Overrides inline-style
-      height: 100,
+      height: 180,
     },
     '&:hover, &$focusVisible': {
       zIndex: 1,
@@ -95,7 +96,7 @@ export default function Categories() {
     <div>
     <PersistentDrawerLeft />
     </div>
-    <div className={classes.root} style={{marginTop: 40, marginLeft:50}}>
+    <div className={classes.root} style={{marginTop: 40, marginLeft:150}}>
       {categories.map((category) => (
         <ButtonBase
           focusRipple
@@ -112,6 +113,7 @@ export default function Categories() {
             }}
           />
           <span className={classes.imageBackdrop} />
+          <Link to={`/category_products/${category.id}`} style={{textDecoration:'none'}}>
           <span className={classes.imageButton}>
             <Typography
               component="span"
@@ -123,6 +125,7 @@ export default function Categories() {
               <span className={classes.imageMarked} />
             </Typography>
           </span>
+          </Link>
         </ButtonBase>
       ))}
     </div>

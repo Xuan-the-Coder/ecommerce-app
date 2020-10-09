@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Divider } from "@material-ui/core";
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import IconButton from '@material-ui/core/IconButton';
@@ -15,9 +13,11 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 import { Link } from 'react-router-dom'
 import PersistentDrawerLeft from './Drawer'
-import { auth, handleUserProfile } from './../firebase/utils'
+import { connect } from 'react-redux'
+import { addBasket } from './../actions/addAction'
 
   const ProductList = props => {
+    console.log("props are:" + props)
 
     const [products , setProducts] = useState([]);
 
@@ -34,7 +34,7 @@ import { auth, handleUserProfile } from './../firebase/utils'
     <div>
 
       <div>
-        <PersistentDrawerLeft {...props}/>
+        <PersistentDrawerLeft {...props} />
       </div>
       <div>
           <Grid container spacing={4} style={{padding: 10}}>
@@ -54,7 +54,7 @@ import { auth, handleUserProfile } from './../firebase/utils'
                     </CardContent>
                     <CardActions>
                       <Link key={key} to={`/product/${product.id}`} style={{textDecoration:'none'}}><Button variant="contained" color="primary" href="#contained-buttons">View details</Button></Link>
-                      <IconButton color="primary" aria-label="add to shopping cart"><AddShoppingCartIcon /></IconButton>
+                      <IconButton color="primary" aria-label="add to shopping cart" onClick={() => props.addBasket(product.id)}><AddShoppingCartIcon /></IconButton>
                     </CardActions>  
                   </Card>
                 </div>
@@ -68,4 +68,4 @@ import { auth, handleUserProfile } from './../firebase/utils'
     );
   }
 
-  export default ProductList
+  export default connect(null, { addBasket })(ProductList)

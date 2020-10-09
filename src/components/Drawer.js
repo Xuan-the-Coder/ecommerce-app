@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -27,6 +27,11 @@ import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom'
 import { auth } from './../firebase/utils'
+import Badge from '@material-ui/core/Badge';
+import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux'
+import { getNumbers } from './../actions/getAction'
+
 
 const drawerWidth = 240;
 
@@ -131,7 +136,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: '0 4px',
+  },
+}))(Badge);
+
 const  PersistentDrawerLeft = props => {
+  console.log(props)
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -144,6 +159,9 @@ const  PersistentDrawerLeft = props => {
     setOpen(false);
   };
 
+  useEffect(() => {
+    getNumbers();
+  }, [])
 
   const { currentUser } = props
   return (
@@ -152,6 +170,7 @@ const  PersistentDrawerLeft = props => {
       <CssBaseline />
       <AppBar
         position="fixed"
+        color='primary'
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
@@ -185,7 +204,11 @@ const  PersistentDrawerLeft = props => {
           </div>
           
           <div>
-          <IconButton color="inherit" aria-label="view shopping cart"style={{marginLeft:880}}><ShoppingCartIcon /></IconButton>
+          <Link to={`/cart`} style={{textDecoration:'none', color: '#FFF'}} className="link" ><IconButton  aria-label="view shopping cart"style={{marginLeft:880}}>
+            <StyledBadge badgeContent={props.basketProps.basketNumbers} color="secondary">
+              <ShoppingCartIcon style={{ color: '#FFF'}}/>
+            </StyledBadge>
+          </IconButton></Link>
           </div>
           {currentUser && (
             <span onClick={()=> auth.signOut()}>Log out</span>
@@ -264,4 +287,7 @@ PersistentDrawerLeft.defaultProps = {
   currentUser: null
 }
 
-export default PersistentDrawerLeft
+const mapStateProps = state => ({
+  basketProps: state.basketState
+})
+export default connect(mapStateProps, { getNumbers })( PersistentDrawerLeft)
