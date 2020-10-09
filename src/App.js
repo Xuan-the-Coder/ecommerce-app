@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import OutlinedPagination from './components/Pagination'
 import './App.css';
 import Registration from "./pages/Signup";
+import Categories from './pages/Categories'
+import CategoryProducts from './pages/CategoryProducts'
 
 import {
   BrowserRouter as Router,
@@ -13,7 +15,9 @@ import ProductList from "./components/ProductList.js";
 import Product from "./pages/Product.js"
 import Signin from "./pages/Signin";
 import { auth } from './firebase/utils'
-
+import { Provider } from 'react-redux'
+import store from './store'
+import Cart from './components/Cart'
 
 const initialState = {
   currentUser: null
@@ -51,16 +55,18 @@ class  App extends Component {
     const { currentUser } = this.state
 
     return (
-
+      <Provider store={store}>
       <Router>
   
       <div className="App">
         <div>
           <Switch>
-            <Route exact path="/" render={() => (
+            <Route exact path="/all_products" render={() => (
               <ProductList currentUser={currentUser}/>
             )} />
-            <Route path="/products-list" component={ProductList} />
+            <Route exact path="/" render={() => (
+              <Categories currentUser={currentUser}/>
+            )} />
             <Route path="/Signin" 
             render={() => currentUser ? <Redirect to="/"/>:(
               <Signin currentUser={currentUser}/>
@@ -69,10 +75,14 @@ class  App extends Component {
               <Registration currentUser={currentUser}/>
             )} />
             <Route path="/product/:id" component={Product} />
+            <Route path="/category_products/:id" component={CategoryProducts} />
+            <Route path="/cart" component={Cart} />
+
           </Switch>
         </div>
       </div>
       </Router>
+      </Provider>
     );
   }
 }
