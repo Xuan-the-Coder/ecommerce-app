@@ -6,11 +6,8 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
-
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
-
 import { Link } from "react-router-dom";
 import PersistentDrawerLeft from "./../components/Drawer";
 import { connect } from "react-redux";
