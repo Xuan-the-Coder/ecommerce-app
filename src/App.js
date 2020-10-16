@@ -4,6 +4,7 @@ import './App.css';
 import Registration from "./pages/Signup";
 import Categories from './pages/Categories'
 import CategoryProducts from './pages/CategoryProducts'
+import { useState } from 'react'
 
 import {
   BrowserRouter as Router,
@@ -62,7 +63,7 @@ class  App extends Component {
         <div>
           <Switch>
             <Route exact path="/all_products" render={() => (
-              <ProductList currentUser={currentUser}/>
+              <ProductList currentUser={currentUser} />
             )} />
             <Route exact path="/" render={() => (
               <Categories currentUser={currentUser}/>
@@ -75,7 +76,7 @@ class  App extends Component {
               <Registration currentUser={currentUser}/>
             )} />
             <Route path="/product/:id" component={Product} />
-            <Route path="/category_products/:id" component={CategoryProducts} />
+            <Route path="/category_products/:id" render={() => (<CategoryProducts /> )}/>
             <Route path="/cart" component={Cart} />
 
           </Switch>

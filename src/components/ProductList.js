@@ -8,9 +8,9 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
-
+import BasicPagination from "./Pagination";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
-
+import axios from 'axios'
 import { Link } from "react-router-dom";
 import PersistentDrawerLeft from "./Drawer";
 import { connect } from "react-redux";
@@ -20,14 +20,33 @@ const ProductList = (props) => {
   console.log(props);
 
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    fetch("http://localhost:3000/products.json").then((response) => {
-      response.json().then((data) => {
-        setProducts(data);
-      });
-    });
-  }, []);
+    const fetchProducts = async () => {
+      setLoading(true)
+      const res = await axios.get("http://localhost:3000/products.json")
+      setProducts(res.data)
+      setLoading(false)
+    }
+
+    fetchProducts()
+  }, [])
+
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(8);
+
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  console.log(currentProducts)
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
@@ -36,7 +55,7 @@ const ProductList = (props) => {
       </div>
       <div>
         <Grid container spacing={4} style={{ padding: 10 }}>
-          {products.map((product, key) => (
+          {currentProducts.map((product, key) => (
             <Grid item xs={3} margin="normal">
               <div>
                 <Card>
@@ -83,6 +102,11 @@ const ProductList = (props) => {
           ))}
         </Grid>
       </div>
+      <BasicPagination
+        productsPerPage={productsPerPage}
+        totalProducts={products.length}
+        paginate={paginate}
+      />
     </div>
   );
 };
