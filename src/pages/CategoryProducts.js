@@ -19,12 +19,12 @@ const CategoryProducts = (props) => {
 
   const [products, setProducts] = useState([]);
 
-  const path = `http://localhost:3000/categories/${id}.json`;
+  const path = `https://panda-ecommerce.herokuapp.com/categories/${id}.json`;
 
   console.log(path);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/categories/${id}.json`).then((response) => {
+    fetch(`https://panda-ecommerce.herokuapp.com/categories/${id}.json`).then((response) => {
       response.json().then((data) => {
         setProducts(data);
       });

@@ -48,7 +48,7 @@ const Product = ({ match }) => {
 
   const [product, setProduct] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:3000/products/${id}.json`).then((response) => {
+    fetch(`https://panda-ecommerce.herokuapp.com/products/${id}.json`).then((response) => {
       response.json().then((data) => {
         setProduct(data);
       });

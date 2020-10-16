@@ -25,7 +25,7 @@ const ProductList = (props) => {
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true)
-      const res = await axios.get("http://localhost:3000/products.json")
+      const res = await axios.get("https://panda-ecommerce.herokuapp.com/products.json")
       setProducts(res.data)
       setLoading(false)
     }

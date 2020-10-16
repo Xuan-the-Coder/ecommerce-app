@@ -84,7 +84,7 @@ export default function Categories() {
   const [categories , setCategories] = useState([]);
 
   useEffect(() => {
-      fetch("http://localhost:3000/categories.json").then(response => {
+      fetch("https://panda-ecommerce.herokuapp.com/categories.json").then(response => {
           response.json().then(data => {
               setCategories(data);
           })
