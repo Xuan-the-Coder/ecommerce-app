@@ -109,7 +109,7 @@ export default function Categories() {
           <span
             className={classes.imageSrc}
             style={{
-              backgroundImage: `url(${category.image_url})`,
+              backgroundImage: `url(https://panda-ecommerce.herokuapp.com${category.image_url})`,
             }}
           />
           <span className={classes.imageBackdrop} />
