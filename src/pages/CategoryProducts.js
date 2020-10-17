@@ -44,7 +44,7 @@ const CategoryProducts = (props) => {
                 <Card>
                   <CardMedia
                     style={{ height: 334, width: 350 }}
-                    image={`http://localhost:3000${product.image_url}`}
+                    image={`https://panda-ecommerce.herokuapp.com${product.image_url}`}
                     title="Product Image"
                   />
                   <CardContent>

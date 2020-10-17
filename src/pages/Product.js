@@ -82,7 +82,7 @@ const Product = ({ match }) => {
               />
               <CardMedia
                 className={classes.media}
-                image={`http://localhost:3000${product.image_url}`}
+                image={`https://panda-ecommerce.herokuapp.com${product.image_url}`}
                 title="Paella dish"
               />
               <CardContent>
