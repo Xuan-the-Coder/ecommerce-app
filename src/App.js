@@ -76,9 +76,8 @@ class  App extends Component {
               <Registration currentUser={currentUser}/>
             )} />
             <Route path="/product/:id" component={Product} />
-            <Route path="/category_products/:id" render={() => (<CategoryProducts /> )}/>
+            <Route path="/category_products/:id" component={CategoryProducts}/>
             <Route path="/cart" component={Cart} />
-
           </Switch>
         </div>
       </div>

@@ -3,7 +3,7 @@ import Axios from "axios";
 
 export const addBasket = (productId) => async (dispatch) => {
 
-    const { data } = await Axios.get(`http://localhost:3000/products/${productId}.json`)
+    const { data } = await Axios.get(`https://panda-ecommerce.herokuapp.com/products/${productId}.json`)
         console.log("Adding to basket")
         console.log(productId)
         dispatch({

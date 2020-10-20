@@ -58,7 +58,7 @@ function Cart({basketProps, productQuantity}) {
                     <Card className={classes.root} >
                     <CardMedia
                         className={classes.cover}
-                        image={`http://localhost:3000${product.image}`}
+                        image={`https://panda-ecommerce.herokuapp.com${product.image}`}
                         title="Paella dish"
                     />
                     <div className={classes.details} stlyle={{marginLeft:100}}>

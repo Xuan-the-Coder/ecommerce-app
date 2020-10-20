@@ -20,33 +20,29 @@ const ProductList = (props) => {
   console.log(props);
 
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true)
-      const res = await axios.get("https://panda-ecommerce.herokuapp.com/products.json")
-      setProducts(res.data)
-      setLoading(false)
-    }
-
-    fetchProducts()
-  }, [])
+    fetch("https://panda-ecommerce.herokuapp.com/products.json").then((response) => {
+      response.json().then((data) => {
+        setProducts(data);
+      });
+    });
+  }, []);
 
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(8);
+  //const [currentPage, setCurrentPage] = useState(1);
+  //const [productsPerPage] = useState(8);
 
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  );
+  //const indexOfLastProduct = currentPage * productsPerPage;
+  //const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  //const currentProducts = products.slice(
+    //indexOfFirstProduct,
+    //indexOfLastProduct
+  //);
 
-  console.log(currentProducts)
+  //console.log(currentProducts)
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  //const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
@@ -55,7 +51,7 @@ const ProductList = (props) => {
       </div>
       <div>
         <Grid container spacing={4} style={{ padding: 10 }}>
-          {currentProducts.map((product, key) => (
+          {products.map((product, key) => (
             <Grid item xs={3} margin="normal">
               <div>
                 <Card>
@@ -102,11 +98,6 @@ const ProductList = (props) => {
           ))}
         </Grid>
       </div>
-      <BasicPagination
-        productsPerPage={productsPerPage}
-        totalProducts={products.length}
-        paginate={paginate}
-      />
     </div>
   );
 };
