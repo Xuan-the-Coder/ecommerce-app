@@ -31,6 +31,7 @@ import Badge from "@material-ui/core/Badge";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { getNumbers } from "./../actions/getAction";
+import { ADD_PRODUCT_BASKET } from "../actions/types";
 
 const drawerWidth = 240;
 
@@ -183,7 +184,7 @@ const PersistentDrawerLeft = (props) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Panda Tea
+            Panda Tea House
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -266,13 +267,17 @@ const PersistentDrawerLeft = (props) => {
             <ListItemIcon>
               <ListIcon />
             </ListItemIcon>
+            <Link to={`/all_products`} style={{ textDecoration: "none" }} color="inherit">
             <ListItemText primary="All Products" />
+            </Link>
           </ListItem>
           <ListItem button>
             <ListItemIcon>
               <CategoryIcon />
             </ListItemIcon>
+            <Link to={`/`} style={{ textDecoration: "none" }} color="inherit">
             <ListItemText primary="Categories" />
+            </Link>
           </ListItem>
         </List>
         <Divider />
@@ -281,7 +286,9 @@ const PersistentDrawerLeft = (props) => {
             <ListItemIcon>
               <GitHubIcon />
             </ListItemIcon>
+            <a href="https://github.com/Xuan-the-Coder/ecommerce-app">
             <ListItemText primary="Git Repo" />
+            </a>
           </ListItem>
           <ListItemLink href="#simple-list">
             <ListItemIcon>
