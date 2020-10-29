@@ -19,6 +19,8 @@ import { auth } from './firebase/utils'
 import { Provider } from 'react-redux'
 import store from './store'
 import Cart from './components/Cart'
+import About from './pages/About'
+import Contact from './pages/Contact'
 
 const initialState = {
   currentUser: null
@@ -78,6 +80,8 @@ class  App extends Component {
             <Route path="/product/:id" component={Product} />
             <Route path="/category_products/:id" component={CategoryProducts}/>
             <Route path="/cart" component={Cart} />
+            <Route path="/about" component={About} />
+            <Route path="/contact" component={Contact} />
           </Switch>
         </div>
       </div>

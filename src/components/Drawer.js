@@ -31,7 +31,6 @@ import Badge from "@material-ui/core/Badge";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { getNumbers } from "./../actions/getAction";
-import { ADD_PRODUCT_BASKET } from "../actions/types";
 
 const drawerWidth = 240;
 
@@ -294,13 +293,17 @@ const PersistentDrawerLeft = (props) => {
             <ListItemIcon>
               <InfoIcon />
             </ListItemIcon>
+            <Link to={`/about`} style={{ textDecoration: "none" }} color="inherit">
             <ListItemText primary="About" />
+            </Link>
           </ListItemLink>
           <ListItemLink href="#simple-list">
             <ListItemIcon>
               <ContactSupportIcon />
             </ListItemIcon>
+            <Link to={`/contact`} style={{ textDecoration: "none" }} color="inherit">
             <ListItemText primary="Contact" />
+            </Link>
           </ListItemLink>
         </List>
       </Drawer>
