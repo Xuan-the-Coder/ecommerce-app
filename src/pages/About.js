@@ -9,17 +9,6 @@ const useStyles = makeStyles({
     root: {
       maxWidth: 400,
     },
-    bullet: {
-      display: 'inline-block',
-      margin: '0 2px',
-      transform: 'scale(0.8)',
-    },
-    title: {
-      fontSize: 14,
-    },
-    pos: {
-      marginBottom: 12,
-    },
   });
 
 export default function About() {
@@ -33,7 +22,11 @@ export default function About() {
         <Card className={classes.root} style={{ marginLeft: 530 }}>
         <CardContent>
             <Typography variant="subtitle1" component="p">
-            This project was originally a final project for my full-stack web dev course. I first built with website with Ruby on Rails by followig the MVC pattern. Then I rebuilt the back-end to convert it to a JSON API and coded this front-end application by utiling REACT as framework, REDUX to manage state, Matterial UI for styling and Firebase to store user info and to handle anthentication. 
+            This app was originally a final project for my full-stack course. I first built it with Ruby on Rails by followig the MVC pattern. Then I connverted the ROR app to be a back-end JSON API and coded this front-end REACT app by utiling REDUX to manage state, Matterial UI for styling and Firebase to store user info and to handle anthentication. 
+            </Typography>
+            <br/>
+            <Typography variant="subtitle1" component="p">
+            The back-end part of this project is currently hosted on heroku and all images are stored in an AWS S3 bucket. 
             </Typography>
         </CardContent>
         </Card>
